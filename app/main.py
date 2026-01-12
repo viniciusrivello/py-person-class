@@ -1,21 +1,21 @@
 class Person:
-    people = {}
+    people: dict[str, "Person"] = {}
 
-    def __init__(self, name: str, age: int):
-        self.name = name
-        self.age = age
+    def __init__(self, name: str, age: int) -> None:
+        self.name: str = name
+        self.age: int = age
         Person.people[name] = self
 
 
 def create_person_list(people: list[dict]) -> list[Person]:
-    person_list = []
+    person_list: list[Person] = []
 
-    # 1️⃣ Criar todas as instâncias primeiro
+    # Criar todas as pessoas primeiro
     for data in people:
         person = Person(data["name"], data["age"])
         person_list.append(person)
 
-    # 2️⃣ Criar os relacionamentos (wife / husband)
+    # Criar os relacionamentos wife / husband
     for data in people:
         person = Person.people[data["name"]]
 
