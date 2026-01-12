@@ -8,21 +8,17 @@ class Person:
 
 
 def create_person_list(people: list[dict]) -> list[Person]:
-    person_list: list[Person] = []
+    person_list: list[Person] = [
+        Person(data["name"], data["age"]) for data in people
+    ]
 
-    # Criar todas as pessoas primeiro
-    for data in people:
-        person = Person(data["name"], data["age"])
-        person_list.append(person)
-
-    # Criar os relacionamentos wife / husband
     for data in people:
         person = Person.people[data["name"]]
 
-        if "wife" in data and data["wife"] is not None:
-            person.wife = Person.people[data["wife"]]
+        if wife_name := data.get("wife"):
+            person.wife = Person.people[wife_name]
 
-        if "husband" in data and data["husband"] is not None:
-            person.husband = Person.people[data["husband"]]
+        if husband_name := data.get("husband"):
+            person.husband = Person.people[husband_name]
 
     return person_list
